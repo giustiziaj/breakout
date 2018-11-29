@@ -19,7 +19,7 @@ public:
    *
    * @return const Game*
    */
-  static const Game* getGame();
+  static Game* getGame();
   /**
    * @brief run the game
    *
@@ -31,18 +31,30 @@ public:
    *
    */
   void addObject(BaseObject*);
+
+  /**
+   * @brief remove an object from the game
+   *
+   */
+  void removeObject(BaseObject*);
+
   /**
    * @brief Get the Collisions for a given game object
    *
    * @return std::vector<BaseObject*>& list of colliding objects
    */
-  std::vector<BaseObject*>& getCollisions(BaseObject*) const;
+  std::vector<BaseObject*>& getCollisions(BaseObject*);
   /**
    * @brief Load texture if not yet loaded, otherwise fetch from texture map
    *
    * @return sf::Texture* the texture object
    */
-  sf::Texture* getTexture(std::string) const;
+  sf::Texture* getTexture(std::string);
+
+  /**
+   * @brief Destroy the Game object
+   *
+   */
   ~Game();
 
 protected:
@@ -57,5 +69,5 @@ private:
   sf::Clock* gameClock;
   std::vector<BaseObject*>* objects;
   std::map<std::string, sf::Texture*>* textures;
-  static const Game* instance;
+  static Game* instance;
 };

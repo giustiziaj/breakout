@@ -8,7 +8,7 @@
 using namespace std;
 using namespace sf;
 
-const Game* Game::instance = NULL;
+Game* Game::instance = NULL;
 
 Game::Game():
   objects(new vector<BaseObject*>()),
@@ -22,7 +22,7 @@ Game::Game():
   window->setVerticalSyncEnabled(true);
 }
 
-Texture* Game::getTexture(string tName) const {
+Texture* Game::getTexture(string tName) {
   if ((*textures)[tName]) {
     return (*textures)[tName];
   }
@@ -36,7 +36,7 @@ Game::~Game() {
   window->close();
 }
 
-const Game* Game::getGame() {
+Game* Game::getGame() {
   if (!instance) instance = new Game();
   return instance;
 }
@@ -45,7 +45,13 @@ void Game::addObject(BaseObject* object) {
   objects->push_back(object);
 }
 
-vector<BaseObject*>& Game::getCollisions(BaseObject* object) const {
+void Game::removeObject(BaseObject* object) {
+  objects->erase(
+    remove(objects->begin(), objects->end(), object),
+    objects->end());
+}
+
+vector<BaseObject*>& Game::getCollisions(BaseObject* object) {
   vector<BaseObject*>* collisions = new vector<BaseObject*>;
   for (BaseObject* other: *objects) {
     if (object->collides(other)) {
@@ -62,6 +68,8 @@ int Game::run() {
       switch(event.type) {
         case Event::Closed:
           window->close();
+          break;
+        default:
           break;
       }
     }

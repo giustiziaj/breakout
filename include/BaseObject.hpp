@@ -16,12 +16,14 @@ public:
    *
    */
   virtual void step() {};
+
   /**
    * @brief Get the Sprite object
    *
    * @return sf::Sprite*
    */
   sf::Sprite* getSprite();
+
   /**
    * @brief check for collision between objects
    *
@@ -29,6 +31,7 @@ public:
    * @return false otherwise
    */
   bool collides(BaseObject*);
+
   /**
    * @brief Get the Name object
    *
@@ -45,7 +48,8 @@ protected:
    * @param texture path
    */
   BaseObject(std::string, sf::Vector2f, std::string);
+
   sf::Sprite* sprite;
   std::string name;
-  const Game* game;
+  Game* game;
 };

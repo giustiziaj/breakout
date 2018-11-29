@@ -3,5 +3,5 @@
 
 class Block: public BaseObject {
 public:
-
+  Block(sf::Vector2f);
 };
