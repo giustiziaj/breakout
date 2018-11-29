@@ -94,7 +94,4 @@ void Ball::step() {
     else
       sprite->move(0, -.1);
   }
-
-
-
 }
