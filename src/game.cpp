@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <random>
 #include <iostream>
+#include <sstream>
 
 #include "Game.hpp"
 #include "Definitions.hpp"
@@ -26,10 +27,40 @@ Texture* Game::getTexture(string tName) {
   if ((*textures)[tName]) {
     return (*textures)[tName];
   }
-  Texture* tex = new Texture();
-  tex->loadFromFile(tName);
-  (*textures)[tName] = tex;
-  return tex;
+  Texture* t = new Texture();
+  t->loadFromFile(tName);
+  (*textures)[tName] = t;
+  return t;
+}
+
+void Game::gameOver(bool winner) {
+  window->clear();
+  Font* font = new Font();
+  Text* text = new Text();
+  stringstream msg;
+  if (winner) {
+    msg << "You Win!" << endl;
+  } else {
+    msg << "Game Over!" << endl;
+  }
+  msg << "Score: " << score << endl;
+  msg << "Press <ESC> to exit";
+  text->setString(msg.str());
+  font->loadFromFile("resources/Hack-Regular.ttf");
+  text->setFont(*font);
+  text->setPosition(0, W_HEIGHT / 2);
+  window->draw(*text);
+  window->display();
+  while(window->isOpen()) {
+    Event e;
+    while (window->pollEvent(e)) {
+      if (e.type == Event::Closed ||
+        (e.type == Event::KeyPressed &&
+        e.key.code == Keyboard::Escape)) {
+            window->close();
+      }
+    }
+  }
 }
 
 Game::~Game() {
@@ -59,6 +90,14 @@ vector<BaseObject*>& Game::getCollisions(BaseObject* object) {
     }
   }
   return *collisions;
+}
+
+int Game::getScore() const {
+  return score;
+}
+
+void Game::setScore(int s) {
+  score = s;
 }
 
 int Game::run() {

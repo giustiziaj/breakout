@@ -76,6 +76,7 @@ void Ball::step() {
     if (other->getName() == "block") {
       bounceOff(other);
       game->removeObject(other);
+      game->setScore(game->getScore() + 1);
     }
   }
   if (sprite->getGlobalBounds().left < 0 ||
@@ -86,12 +87,14 @@ void Ball::step() {
     else
       sprite->move(-.1, 0);
   }
-  if (sprite->getGlobalBounds().top < 0 ||
-      sprite->getGlobalBounds().top + 30 >= W_HEIGHT) {
+  if (sprite->getGlobalBounds().top < 0) {
     direction.y *= -1;
     if (sprite->getGlobalBounds().top < 0)
       sprite->move(0, .1);
     else
       sprite->move(0, -.1);
+  }
+  if (sprite->getGlobalBounds().top + 30 >= W_HEIGHT) {
+    game->gameOver(false);
   }
 }

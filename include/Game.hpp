@@ -52,10 +52,19 @@ public:
   sf::Texture* getTexture(std::string);
 
   /**
+   * @brief show the game over screen
+   *
+   */
+  void gameOver(bool);
+
+  /**
    * @brief Destroy the Game object
    *
    */
   ~Game();
+
+  int getScore() const;
+  void setScore(int);
 
 protected:
   /**
@@ -66,6 +75,7 @@ protected:
 
 private:
   sf::RenderWindow* window;
+  int score = 0;
   sf::Clock* gameClock;
   std::vector<BaseObject*>* objects;
   std::map<std::string, sf::Texture*>* textures;
