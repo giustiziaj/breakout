@@ -1,6 +1,6 @@
 #pragma once
 
-#define W_TITLE "platformer"
+#define W_TITLE "breakout"
 #define W_WIDTH 600
 #define W_HEIGHT 600
 

@@ -6,18 +6,50 @@
 #include <SFML/Window.hpp>
 
 #include "BaseObject.hpp"
-class BaseObject;
+class BaseObject; // forward declaration
 
+/**
+ * @brief game singleton is the central controller for all game functionality
+ *
+ */
 class Game {
 public:
+  /**
+   * @brief Get the Game singleton object
+   *
+   * @return const Game*
+   */
   static const Game* getGame();
+  /**
+   * @brief run the game
+   *
+   * @return int exit status
+   */
   int run();
+  /**
+   * @brief insert game object into game
+   *
+   */
   void addObject(BaseObject*);
+  /**
+   * @brief Get the Collisions for a given game object
+   *
+   * @return std::vector<BaseObject*>& list of colliding objects
+   */
   std::vector<BaseObject*>& getCollisions(BaseObject*) const;
+  /**
+   * @brief Load texture if not yet loaded, otherwise fetch from texture map
+   *
+   * @return sf::Texture* the texture object
+   */
   sf::Texture* getTexture(std::string) const;
   ~Game();
 
 protected:
+  /**
+   * @brief Protected constructor for singleton
+   *
+   */
   Game();
 
 private:
